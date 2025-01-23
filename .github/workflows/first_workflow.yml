@@ -30,6 +30,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a two-line script
         run: |
-          echo "$NAME"
+          echo ${{secrets.NAME}}
           echo Add other actions to build,
           echo test, and deploy your project.
