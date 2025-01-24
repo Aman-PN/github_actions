@@ -6,7 +6,6 @@ name: Github cicd pipeline
 on:
   push:
     branches: 
-      - feature
       - feature2
             
 
