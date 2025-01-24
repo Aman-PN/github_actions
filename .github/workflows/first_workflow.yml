@@ -6,8 +6,7 @@ name: Github cicd pipeline
 on:
   push:
     branches: 
-      - feature
-            
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   #workflow_dispatch:
