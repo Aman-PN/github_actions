@@ -24,7 +24,7 @@ env:
 
 jobs:
   build:
-    working-directory: 03-app-dotnet
+    
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -73,6 +73,7 @@ jobs:
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         id: build-and-push
+        working-directory: 03-app-dotnet
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
