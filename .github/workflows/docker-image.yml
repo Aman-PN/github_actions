@@ -46,5 +46,7 @@ jobs:
       IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
     steps:
       - name: Push Image to Docker Hub
-        run:
-          docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+        with:
+          image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}'
+          run:
+            docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
