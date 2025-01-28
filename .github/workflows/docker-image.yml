@@ -42,4 +42,4 @@ jobs:
     steps:
       - name: Push Image to Docker Hub
         run:
-            docker push ${{ secrets.DOCKER_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG
+          docker push ${{ secrets.DOCKER_REPOSITORY }}/$IMAGE_NAME:$IMAGE_TAG
