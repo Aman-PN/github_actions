@@ -48,5 +48,7 @@ jobs:
       - name: Push Image to Docker Hub
         with:
           image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}'
-          run:
-            docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+    steps:
+      - name: Push Image to Docker Hub1   
+        run:
+          docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
