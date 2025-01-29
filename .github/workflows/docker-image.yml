@@ -3,7 +3,7 @@ name: Docker build the image and push into dockerhub
 on:
   push:
     branches:
-      - develop
+      - development
     paths: .github/workflows/docker-image.yml
   workflow_dispatch:
     inputs:
