@@ -1,6 +1,5 @@
 name: Docker build the image and push into dockerhub
 
-
 on:
   push:
     branches:
