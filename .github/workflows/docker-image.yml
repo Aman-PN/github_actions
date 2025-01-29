@@ -2,9 +2,9 @@ name: Docker build the image and push into dockerhub
 
 
 on:
-  # push:
-  #   branches: [ "main" ]
-  #   paths: .github/workflows/docker-image.yml
+  push:
+    branches: [ "main" ]
+    paths: .github/workflows/docker-image.yml
   workflow_dispatch:
     inputs:
       environment:
@@ -14,9 +14,9 @@ on:
         default: false
 
 jobs:
-  build:
+  deploy_on_dev:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: development
     env:
       #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
       DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
@@ -48,3 +48,38 @@ jobs:
     - name: Push Image to Docker Hub   
       run:
         docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+
+  deploy_on_stage:
+      runs-on: ubuntu-latest
+      environment: Stage
+      env:
+        #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
+        DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+        DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
+        IMAGE_NAME: webapp
+        IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
+  
+      steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        working-directory: 03-app-dotnet
+        run: docker build . --file Dockerfile --tag $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+        
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
+        with:
+          image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'MEDIUM,HIGH,CRITICAL'
+  
+      - name: Login to Docker Hub
+        run: |
+          echo "$DOCKER_REPOSITORY_PASSWORD" | docker login -u $DOCKER_REPOSITORY --password-stdin
+      
+      - name: Push Image to Docker Hub   
+        run:
+          docker push $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
