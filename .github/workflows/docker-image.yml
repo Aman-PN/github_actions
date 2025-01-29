@@ -5,12 +5,17 @@ on:
     branches: [ "main" ]
     paths: .github/workflows/docker-image.yml
   workflow_dispatch:
+    inputs:
+      environment::
+        description: 'deploy to'
+        type: environment
+        required: true
+        default: dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: 'Development'
+    environment: ${{ inputs.environment}}
     env:
       #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
       DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
