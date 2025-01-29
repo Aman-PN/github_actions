@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: 'Development'
     env:
       #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
       DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
