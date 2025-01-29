@@ -51,6 +51,7 @@ jobs:
 
   deploy_on_stage:
       runs-on: ubuntu-latest
+      needs: deploy_on_dev
       environment: Stage
       env:
         #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
