@@ -1,4 +1,4 @@
-name: Docker build and push
+name: Docker build and push in github container registry.
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -13,9 +13,6 @@ on:
     paths: .github/workflows/docker-build-publish.yml
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main" ]
-    paths: .github/workflows/docker-build-publish.yml
   workflow_dispatch:
 
 env:
@@ -23,7 +20,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
-  IMAGE_NAME: aman-pn/github_actions
+  IMAGE_NAME: aman-pn/dotnetapp
   IMAGE_TAG: 1.3.${{ github.run_number }} # GITHUB_RUN_NUMBER }}
 
 
