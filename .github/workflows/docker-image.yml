@@ -1,10 +1,10 @@
 name: Docker build the image and push into dockerhub
 
 on:
-  push:
-    branches:
-      - development
-    paths: .github/workflows/docker-image.yml
+  # push:
+  #   branches:
+  #     - development
+  #   paths: .github/workflows/docker-image.yml
     
   workflow_dispatch:
     inputs:
@@ -16,9 +16,9 @@ on:
 
 jobs:
   deploy_on_dev:
-    if: github.event_name == 'push'
+    # if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    environment: development
+    environment: ${{ inputs.environment }}
     env:
       #DOCKER_REPOSITORY: aman7777 # name of Docker Hub ID
       DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
